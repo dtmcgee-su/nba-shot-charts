@@ -1,0 +1,68 @@
+---
+title: "Week 2 Day 4"
+author: "Dylan McGee"
+date: "7/30/2020"
+output:
+  word_document: default
+  pdf_document: default
+  html_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+```{r}
+setwd("G:/My Drive/Syracuse University/Berlin Summer Academy/Berlin Working Directory 2")
+#add in neceassrary libraries
+library(tidyverse)
+# install.packages("BasketballAnalyzeR")
+library(BasketballAnalyzeR)
+```
+
+```{r}
+# Import NBA Shot Chart data set
+nba_shotcharts <- read.csv("nba201516PbPShots.csv")
+
+nba_shotcharts
+```
+
+```{r}
+#transform data using PbP Manipulation
+PbP <- PbPmanipulation(nba_shotcharts)
+```
+
+```{r}
+#Scale the axis' to center of the hoop 
+PbP %>% mutate(xx = original_x/10, yy = original_y/10-41.75) -> PbP
+```
+
+```{r}
+#Filter by a player and create their shot chart
+PbP %>% filter(player == "James Harden") -> jamesHarden
+PbP %>% filter(player == "Brook Lopez") -> brookLopez 
+PbP %>% filter(player == "Giannis Antetokounmpo") -> giannisA
+PbP %>% filter(player == "Chris Paul") -> chrisPaul
+PbP %>% filter(player == "Victor Oladipo") -> victorOladipo
+```
+
+```{r}
+shotchart(data=jamesHarden, x='xx', y='yy', scatter = TRUE)
+shotchart(data=brookLopez, x='xx', y='yy', scatter = TRUE)
+shotchart(data=giannisA, x='xx', y='yy', scatter = TRUE)
+shotchart(data=chrisPaul, x='xx', y='yy', scatter = TRUE)
+shotchart(data=victorOladipo, x='xx', y='yy', scatter = TRUE)
+
+
+```
+
+```{r}
+shotchart(data=jamesHarden, x='xx', y='yy', z= "result", scatter = TRUE)
+
+```
+
+```{r}
+shotchart(data=jamesHarden, x='xx', y='yy', z= "points", scatter = TRUE)
+```
+
